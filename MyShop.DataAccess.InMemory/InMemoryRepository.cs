@@ -1,4 +1,5 @@
-﻿using MyShop.Core.Models;
+﻿using MyShop.Core.Contracts;
+using MyShop.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MyShop.DataAccess.InMemory
 {
-    public class InMemoryRepository<T> where T : BaseEntity // T ist einfach ein Platzhalter - da könnte alles stehen
+    public class InMemoryRepository<T> : IRepository<T> where T : BaseEntity // T ist einfach ein Platzhalter - da könnte alles stehen
     {
         ObjectCache cache = MemoryCache.Default;
         List<T> items; // Platzhalter T
@@ -37,7 +38,7 @@ namespace MyShop.DataAccess.InMemory
         public void Update(T t)
         {
             T tToUpdate = items.Find(i => i.Id == t.Id);
-            if(tToUpdate != null)
+            if (tToUpdate != null)
             {
                 tToUpdate = t;
             }
@@ -49,7 +50,7 @@ namespace MyShop.DataAccess.InMemory
 
         public T Find(string Id)
         {
-            T t = items.Find(i=>i.Id == Id);
+            T t = items.Find(i => i.Id == Id);
             if (t != null)
             {
                 return t;
